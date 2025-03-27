@@ -1,0 +1,17 @@
+
+
+<div class="details-container">
+  <p class="title">more-detailes works!</p>
+  
+  <div class="card">
+    <div class="card-body">
+      <img class="card-image" src="{{ currentItem.image }}" alt="Card image" />
+      <h2 class="card-title">{{ currentItem.nameItem }}</h2>
+      <p class="card-text"><strong>מחיר:</strong> {{ currentItem.sizeItem }}</p>
+      <p class="card-text"><strong>תיאור:</strong> {{ currentItem.discraptionItem }}</p>
+      <p class="card-text"><strong>כמות במלאי:</strong> {{ currentItem.countOfMelai }}</p>
+
+      <button class="back-button" (click)="goBack()">חזור</button>
+    </div>
+  </div>
+</div>

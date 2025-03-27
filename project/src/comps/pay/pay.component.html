@@ -1,0 +1,167 @@
+
+
+<div class="form-container">
+  <h2>pay works!</h2>
+
+  <!-- לצורך בדיקה האם לאיש מגיע הנחה -->
+<p>בחר קופון</p>
+  <select (change)="dicount1()" [(ngModel)]="code" name="קוד קופן" class="form-control select-left">
+    <option value="בחר קופון" disabled selected>בחר קופון</option>
+    <option value="הנחת יום הולדת">הנחת יום הולדת</option>
+    <option value="סוף עונה">סוף עונה</option>
+    <option value="1+1">1+1</option>
+</select>
+
+  
+  <p>מחיר לפני הנחה: {{Price}}</p>
+  <p>מחיר לאחר הנחה: {{priceOfDiscount ? priceOfDiscount : Price}}</p>
+  
+  <!-- קשור לעיצוב(פרח שמסובב ואומר"מעבד נתונים") -->
+  @if (processing) {
+    <div class="processing-container">
+      <div class="flower-spinner">
+        <div class="petal"></div>
+        <div class="petal"></div>
+        <div class="petal"></div>
+        <div class="petal"></div>
+        <div class="petal"></div>
+        <div class="petal"></div>
+      </div>
+      <p>מעבד נתונים...</p>
+    </div>
+  }
+
+  @if (!processing) {
+    <form #payForm="ngForm" (ngSubmit)="onSubmit()" class="payment-form">
+      <!-- תעודת זהות -->
+      <div class="mb-3">
+        <label for="tz" class="form-label">TZ:</label>
+        <input 
+          type="text" class="form-control" id="tz" 
+          placeholder="Enter TZ" name="tz"
+          [(ngModel)]="tz"
+          required pattern="^\d{9}$"
+          #tzInput="ngModel">
+        
+        @if (tzInput.invalid && tzInput.touched) {
+          <div class="text-danger">
+            @if (tzInput.errors?.['required']) {
+              <span>שדה חובה</span>
+            }
+            @if (tzInput.errors?.['pattern']) {
+              <span>יש להזין מספר ת.ז בן 9 ספרות</span>
+            }
+          </div>
+        }
+      </div>
+  
+      <!-- שם בעל הכרטיס -->
+      <div class="mb-3">
+        <label for="cardHolder" class="form-label">שם בעל הכרטיס:</label>
+        <input 
+          type="text" class="form-control" id="cardHolder" 
+          placeholder="Enter Cardholder Name" name="cardHolder"
+          [(ngModel)]="cardHolder"
+          required
+          #cardHolderInput="ngModel">
+        
+        @if (cardHolderInput.invalid && cardHolderInput.touched) {
+          <div class="text-danger">
+            @if (cardHolderInput.errors?.['required']) {
+              <span>שדה חובה</span>
+            }
+          </div>
+        }
+      </div>
+  
+      <!-- מספר כרטיס אשראי -->
+      <div class="mb-3">
+        <label for="numCard" class="form-label">מספר כרטיס:</label>
+        <input 
+          type="text" class="form-control" id="numCard" 
+          placeholder="Enter Card Number" name="numCard"
+          [(ngModel)]="numCard"
+          required pattern="^\d{16}$"
+          #cardInput="ngModel">
+        
+        @if (cardInput.invalid && cardInput.touched) {
+          <div class="text-danger">
+            @if (cardInput.errors?.['required']) {
+              <span>שדה חובה</span>
+            }
+            @if (cardInput.errors?.['pattern']) {
+              <span>כרטיס אשראי צריך להיות בן 16 ספרות</span>
+            }
+          </div>
+        }
+      </div>
+  
+      <!-- תוקף -->
+      <div class="mb-3">
+        <label for="expDate" class="form-label">תוקף:</label>
+        <input 
+          type="text" class="form-control" id="expDate" 
+          placeholder="MM/YY" name="expDate"
+          [(ngModel)]="expDate"
+          required pattern="^(0[1-9]|1[0-2])\/\d{2}$"
+          #expInput="ngModel">
+        
+        @if (expInput.invalid && expInput.touched) {
+          <div class="text-danger">
+            @if (expInput.errors?.['required']) {
+              <span>שדה חובה</span>
+            }
+            @if (expInput.errors?.['pattern']) {
+              <span>תאריך חייב להיות בפורמט MM/YY</span>
+            }
+          </div>
+        }
+      </div>
+  
+      <!-- CVV -->
+      <div class="mb-3">
+        <label for="cvv" class="form-label">CVV:</label>
+        <input 
+          type="text" class="form-control" id="cvv" 
+          placeholder="Enter CVV" name="cvv"
+          [(ngModel)]="cvv"
+          required pattern="^\d{3}$"
+          #cvvInput="ngModel">
+        
+        @if (cvvInput.invalid && cvvInput.touched) {
+          <div class="text-danger">
+            @if (cvvInput.errors?.['required']) {
+              <span>שדה חובה</span>
+            }
+            @if (cvvInput.errors?.['pattern']) {
+              <span>CVV חייב להכיל 3 ספרות</span>
+            }
+          </div>
+        }
+      </div>
+  
+      <!-- כפתור שליחה -->
+      <button type="submit" class="btn btn-primary" [disabled]="payForm.invalid">
+        שלח
+      </button>
+    </form>
+  }
+
+  <!-- הודעת הצלחה עם אנימציה -->
+  @if (paymentSuccess) {
+    <div class="popup">
+      <div class="popup-message">
+        <p>✅ התשלום בוצע בהצלחה!</p>
+      </div>
+    </div>
+  }
+</div>
+
+  <!-- הודעת הצלחה עם אנימציה -->
+@if (paymentSuccess) {
+  <div class="popup">
+    <div class="popup-message">
+      <p>✅ התשלום בוצע בהצלחה!</p>
+    </div>
+  </div>
+}

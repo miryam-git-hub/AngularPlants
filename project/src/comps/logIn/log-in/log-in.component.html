@@ -1,0 +1,19 @@
+<p>log-in works!</p>
+
+
+
+
+
+<div class="container">
+    <form (ngSubmit)="save()">
+      <div class="form-group">
+        <label for="IdCustomer">tz:</label>
+        <input type="text" class="form-control" id="IdCustomer"
+         placeholder="Enter tz" name="IdCustomer" [(ngModel)]="c.idCustomer">
+      </div>
+ 
+      
+      <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+  </div>
+

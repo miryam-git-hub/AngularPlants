@@ -1,0 +1,22 @@
+
+
+
+<div class="home-container">
+    <h1 class="title">!ברוכים הבאים לאתר המשתלה שלנו</h1>
+    <p class="subtitle">המקום שבו תמצאו את כל סוגי השתילים שרק תרצו  </p>
+  
+    <button class="products-button" (click)="more()">לצפייה במוצרים</button>
+  
+    <div class="featured-products">
+      <h2>מוצרים נבחרים</h2>
+      <div class="grid">
+        @for (item of featuredItems; track item.barkodItem) {
+          <div class="card">
+            <img src="{{ item.image }}" alt="Product image" />
+            <p class="product-name">{{ item.nameItem }}</p>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+  

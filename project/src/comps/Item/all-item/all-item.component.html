@@ -1,0 +1,63 @@
+
+
+<div class="container">
+  <!-- צד הסינון -->
+  <div class="filters">
+    <p class="title">סינון</p>
+    <input type="text" placeholder="מחיר" (blur)="filter1()" [(ngModel)]="pri" />
+    <input type="text" placeholder="מלאי" (blur)="filter1()" [(ngModel)]="mel" />
+    <select (blur)="filter1()" [(ngModel)]="cat">
+      
+      <!-- שימוש ברשימה של קטגוריות שהגיע עי קריאת שרת כדי לסנן לפי קטגוריה -->
+      <option disabled selected>קטגוריה</option>
+      @for(i of allCat; track i.idCategory) {
+        <option>{{ i.nameCategory }}</option>
+      }
+    </select>
+    <button (click)="filter1()">סנן</button>
+  </div>
+
+
+  <!-- צד המוצרים -->
+  <div class="products">
+    <p class="title">all item</p>
+    <!-- שליחה לפונקציות של המיונים -->
+    <div class="buttons">
+      <button (click)="sort1()">מיין מהזול ליקר</button>
+      <button (click)="sort2()">מיין לפי מלאי</button>
+      <button (click)="sort3()">חזור</button>
+    </div>
+
+    <!-- מעבר על רשימת המוצרים, רשימה שהגיעה מקריאת שרת ומוגדרת ב SERVICE כדי שנוכל להשתמש בה במקומות נוספים -->
+    <div class="grid">
+      @for (c of allItem1; track c.barkodItem) {
+        <div class="card">
+          <!-- תמונה - מבוצעת עי קריאת שרת -->
+          <img src="{{ c.image }}" alt="Card image" />
+          <div class="info">
+            <h4>{{ c.nameItem }}</h4>
+            <p>{{ c.sizeItem! | Shekel }}</p>
+            <!-- שימוש בכפתור עם איקונים -->
+            <app-btn  myClass="fa-solid fa-caret-down" word="עוד מידע"  (click)="more(c)"></app-btn>
+            <app-btn 
+            myClass="fa-solid fa-cart-plus" 
+            word="הוסף לסל" 
+            (click)="c.countOfMelai! > 0 ? addBasket(c) : $event.preventDefault()"
+            [ngClass]="c.countOfMelai == 0 ? 'efes' : ''"
+            
+            appButtonChange 
+               [pruductId]="c.barkodItem">
+            
+        </app-btn>
+        <!-- appButtonChange שימוש ב DIRECTIVE -->
+
+                  </div>
+        </div>
+      }
+    </div>
+
+    <div class="center">
+      <button (click)="getItem(false)">ראה עוד 🕶️🕶️</button>
+    </div>
+  </div>
+</div>

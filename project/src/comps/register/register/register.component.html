@@ -1,0 +1,66 @@
+<p>register works!</p>
+
+  
+<!-- טופס הרשמה עם בדיקות תקינות -->
+<div class="container mt-3">
+  <h2>Stacked form</h2>
+  <form #myForm="ngForm" (ngSubmit)="save()">
+  
+    <div class="mb-3">
+      <label for="TZ">user number:</label>
+      <input type="text" class="form-control" id="TZ" placeholder="Enter TZ" name="TZ"  required pattern="[0-9]{9}" 
+      maxlength="9" [(ngModel)]="currentUser.idCustomer"  #validTz="ngModel">
+      @if( validTz.invalid && (validTz.touched ||validTz.dirty)){
+        <div class="inValid-feedback">
+            <p [hidden]="!validTz.errors!['required']">שדה חובה</p>
+            <p [hidden]="!validTz.errors!['pattern']">תז לא תקינה</p>
+        </div>
+        }
+    </div>
+   
+    <div class="mb-3">
+        <label for="name">name:</label>
+        <input type="text" class="form-control" id="name" placeholder="Enter name" name="name"  required
+        #userName="ngModel" [(ngModel)]="currentUser.nameCustomer" pattern="[א-ת]{2,10}">
+        @if(userName.invalid &&(userName.touched || userName.dirty))
+        {
+        <p [hidden]="!userName.errors!['required']">שדה חובה</p>
+        <p [hidden]="!userName.errors!['pattern']"> שים לב! שם בעברית ובין 2 עד 10 תווים</p>
+        }
+      </div>
+ 
+
+      <div class="mb-3">
+        <label for="phon">phon:</label>
+        <input type="text" class="form-control" id="phon" placeholder="Enter phon" name="phon"  required pattern="[0-9]{10}" 
+        maxlength="10" [(ngModel)]="currentUser.phonCustomer"  #validTz="ngModel">
+        @if( validTz.invalid && (validTz.touched ||validTz.dirty)){
+          <div class="inValid-feedback">
+              <p [hidden]="!validTz.errors!['required']">שדה חובה</p>
+              <p [hidden]="!validTz.errors!['pattern']">טלפון לא תקינה</p>
+          </div>
+          }
+      </div>
+      <div class="mb-3 mt-3">
+        <label for="email">Email:</label>
+        <input type="email" class="form-control" id="email" placeholder="Enter email" name="email" [(ngModel)]="currentUser.emailCustomer"  #mail="ngModel"
+        pattern="[A-Za-z.0-9]+@(gmail.com|co.il|net)">
+        @if(mail.invalid &&(mail.touched || mail.dirty))
+        {
+        <p >מיל לא תקין   </p>
+        }
+      </div>
+      <div class="mb-3 mt-3">
+        <label for="email">date of birth day:</label>
+        <input type="date" class="form-control" id="date" name="date" [(ngModel)]="currentUser.dateOfBirthday">
+      </div>
+      <div class="form-check mb-3">
+        <label class="form-check-label">
+          <input class="form-check-input" type="checkbox" name="remember">i confirm that all the details i have entered in are correct 
+        </label>
+      </div>
+    <button type="submit" class="btn btn-primary" [disabled]="!myForm.valid">Submit</button>
+  </form>
+</div>
+
+

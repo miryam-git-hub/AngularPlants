@@ -1,0 +1,58 @@
+
+
+<p>shop-cart works!</p>
+<div class="container mt-3">
+    <h2>your shoping cart</h2>
+    <table class="table table-hover">
+      <thead>
+
+        <tr>
+          <th>item name</th>
+          <th>count</th>
+          <th>price</th>
+          <th>discraption</th>
+          <th>add</th>
+          <th>discount</th>
+          <th>delete</th>
+
+        </tr>
+      </thead>
+
+      <!-- מעבר על העגלה - רשימה מקומית של מוצרי הקניה , ובסיום הקניה היא תתעדכן בשרת -->
+      @for(c of CartS.buyItems; track c.IdItem ){
+      <tbody>
+        <tr>
+          <td>{{c.IdItem!|NamePipe}}</td>
+
+          <!-- <td>{{ getPriceAndName(c.IdItem!).name }}</td> -->
+          <td>{{c.CountItem}}</td>
+          <td>{{c.IdItem!|PricePipe}}</td>
+
+          <td>{{c.IdItem!|DisPipe}}</td>
+          <!-- <td>{{ getPriceAndName(c.IdItem!).price }}</td> -->
+          <!-- <td>{{getPriceAndName(c.IdItem!).dis}}</td> -->
+           <!-- עדכון + ו - -->
+          <td (click)="update(c.IdItem!,1)">+</td>
+          <td (click)="update(c.IdItem!,0)">-</td>
+          <!-- מחיקת המוצר -->
+          <td (click)="deleteItem(c.IdItem!)">x</td>
+
+        </tr>
+      </tbody>
+    }
+    </table>
+  </div>
+
+  <!-- כשוא רוצה לסיים - שליחה לפונקציה של הזדהות ,
+   לאחר ההזדהות הוא יחזור לפה והכפתור הזה יעלם ובמקומו יופיע הכפתור הבא -->
+   <!-- משתנה שלקוח מהSERVICE -->
+@if(!this.CartS.buttonPay){
+<app-btn  myClass="fa-brands fa-paypal" word="שלם עכשיו"  (click)="logIn()"></app-btn>
+
+}
+<!-- אירי ההזדהות יבוא לכאן ויעביר לדף תשלום -->
+@else{
+  <p > עכשיו אתה מחובר, אם אתה רוצה לסיים את הקניה לחץ כאן👇</p>
+  <app-btn  myClass="fa-regular fa-credit-card" word="מעבר לתשלום"  (click)="pay()"></app-btn>
+
+}
